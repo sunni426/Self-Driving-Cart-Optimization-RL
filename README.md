@@ -5,3 +5,4 @@ this link is the colab that should be working
 
 
 ![alt text](https://github.com//sunni426/ec418_extracredit/blob/Qlearning/colabcoding_solutions/Untitled.png?raw=true)
+![alt text](https://github.com//sunni426/ec418_extracredit/blob/Qlearning/colabcoding_solutions/Untitled1.png?raw=true)
