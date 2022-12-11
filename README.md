@@ -4,4 +4,4 @@ https://colab.research.google.com/drive/1yMHp9R3fHPtvUEaA2B3dpDUH8bhPIgKC?authus
 this link is the colab that should be working
 
 
-![alt text](https://github.com//sunni426/ec418_extracredit/blob/Qlearning/image.jpg?raw=true)
+![alt text](https://github.com//sunni426/ec418_extracredit/blob/Qlearning/colabcoding_solutions/Untitled.png?raw=true)
