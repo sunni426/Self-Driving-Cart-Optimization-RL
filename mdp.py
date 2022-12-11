@@ -13,11 +13,29 @@
 
 
 import random
+import util
+import game
+import pacman
 
 # added, Sunni
-from game import AgentState, Directions, Grid
+import game
+from game import GameStateData, Actions, Game
+from pacman import GameState
+
+EMPTY_LOCATION_REWARD = -0.04
+FOOD_REWARD = 10
+CAPSULE_REWARD = 100
+GHOST_REWARD = -1000
+
+GAMMA = 0.9
+DANGER_ZONE_RATIO = 6
+DANGER = 500
+ITERATIONS = 10
 
 class MarkovDecisionProcess:
+
+    def __init__(self):
+        self.map = self.walls = self.corners = None
 
     def getStates(self):
         """
@@ -26,14 +44,16 @@ class MarkovDecisionProcess:
         """
         # abstract
         # state = AgentState( self.start, self.isPacman )
-        state = Grid
+        state = GameStateData(self)
         return state
 
     def getStartState(self):
         """
         Return the start state of the MDP.
         """
-        abstract
+        # abstract
+        return GameStateData.initialize() #, layout, numGhostAgents )
+        
 
     def getPossibleActions(self, state):
         """
@@ -41,8 +61,11 @@ class MarkovDecisionProcess:
         """
         # abstract
         # return [[-1, 0], [1, 0], [0, 1], [0, -1]] 
-        actions = Directions
-        return actions
+        # actions = Directions
+        # return actions
+        # Actions.getPossibleActions
+        # return Actions
+        return GameState.getLegalActions(state)
 
 
     def getTransitionStatesAndProbs(self, state, action):
@@ -56,7 +79,8 @@ class MarkovDecisionProcess:
         learning in general, we do not know these
         probabilities nor do we directly model them.
         """
-        abstract
+        # abstract
+        return GameState.generateSuccessor(state,action)
 
     def getReward(self, state, action, nextState):
         """
@@ -64,7 +88,18 @@ class MarkovDecisionProcess:
 
         Not available in reinforcement learning.
         """
-        abstract
+        # abstract
+        position = util.nearestPoint(state.agentStates[0].Configuration.getPosition())
+
+        if state._win:
+            return 999
+        elif state._lose:
+            return -999
+        elif state.food[position[0]][position[1]]:
+            return 10
+        else: # empty space
+            return -0.1
+        
 
     def isTerminal(self, state):
         """
@@ -74,4 +109,6 @@ class MarkovDecisionProcess:
         state as having a self-loop action 'pass' with zero reward; the formulations
         are equivalent.
         """
-        abstract
+        # abstract
+        # if Game.getProgress(self)
+        return state._win or state._lose

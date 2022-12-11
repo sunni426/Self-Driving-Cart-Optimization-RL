@@ -40,7 +40,7 @@ class ValueIterationAgent(ValueEstimationAgent):
               mdp.getReward(state, action, nextState)
               mdp.isTerminal(state)
         """
-        self.mdp = mdp
+        self.mdp = mdp.MarkovDecisionProcess()
         self.discount = discount
         self.iterations = iterations
         self.values = util.Counter() # A Counter is a dict with default 0
@@ -67,29 +67,29 @@ class ValueIterationAgent(ValueEstimationAgent):
                     temp_counter[s] = max_val
             self.values = temp_counter
 
-                # if self.mdp.isTerminal(s):
-                #     self.values[s] = 0 #a terminal state has value zero
-                
-                # else: #only non-terminal states are considered below
-                
-                #     possible_actions = self.mdp.getPossibleActions(s) 
-                #     temp_value=-100000000 #really low number below the value function
-                        
-                #     for a in possible_actions: 
-                #         val_a = 0 #this variable will compute the value of each action
-                #         next = self.mdp.getTransitionStatesAndProbs(s, a)
-                #         #next is a set of pairs of next state + probabilities
+            if self.mdp.isTerminal(s):
+                self.values[s] = 0 #a terminal state has value zero
+            
+            else: #only non-terminal states are considered below
+            
+                possible_actions = self.mdp.getPossibleActions(s) 
+                temp_value=-100000000 #really low number below the value function
                     
-                            
-                #         for sprime,prob in next:
-                #             rew = self.mdp.getReward(s,a,sprime)
-                #             val_a += prob*(rew+self.discount*oldvalues[sprime]) #by end of this for, val_a is the value of taking action a
+                for a in possible_actions: 
+                    val_a = 0 #this variable will compute the value of each action
+                    next = self.mdp.getTransitionStatesAndProbs(s, a)
+                    #next is a set of pairs of next state + probabilities
+                
+                        
+                    for sprime,prob in next:
+                        rew = self.mdp.getReward(s,a,sprime)
+                        val_a += prob*(rew+self.discount*oldvalues[sprime]) #by end of this for, val_a is the value of taking action a
 
 
-                #         if val_a > temp_value:
+                    if val_a > temp_value:
 
-                #             temp_value = val_a #maximum computation
-                #     self.values[s] = temp_value #at end of loops, update self.values
+                        temp_value = val_a #maximum computation
+                self.values[s] = temp_value #at end of loops, update self.values
                     
     
     def getValue(self, state):

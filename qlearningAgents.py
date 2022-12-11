@@ -187,6 +187,10 @@ class PacmanQAgent(QLearningAgent):
         informs parent of action for Pacman.  Do not change or remove this
         method.
         """
+
+        print(f'state: \n{state}')
+        print(f'state[0]: {state[0]}')
+
         action = QLearningAgent.getAction(self,state)
         self.doAction(state,action)
         return action
