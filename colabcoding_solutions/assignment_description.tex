@@ -1,0 +1,61 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Coding Assignment 2}
+\author{EC 400}
+
+\begin{document}
+\maketitle
+
+
+
+\noindent {\bf Setup. }
+Unzip the base code provided on blackboard into a new directory. You can check that everything is as it should be by running
+\begin{verbatim} 
+python3 gridworld.py -g MazeGrid
+\end{verbatim} 
+You should see the agent move around randomly on the gridworld until it reaches a termination step. 
+
+\bigskip
+
+\noindent {\em Hint:} In Anaconda Spyder, under "Run" you can select "Configuration per File" and enter the command line options, i.e., "-g MazeGrid". If you are not using command line to write Python, whatever software you are using should have a similar option. 
+
+\bigskip
+
+\noindent {\em Note:} Spyder occasionally freezes after the above program terminates. I usually reset it by restarting the kernel ("CONTROL" + "."). 
+
+
+\bigskip
+
+\noindent {\bf Q-learning:} Write code to do Q-learning on gridworld by editing the  qlearningAgents.py file. In that file, 
+fill in the code for the functions 
+getQValue, ComputeValuefromQvalues, computeActionFromQValues, getAction, and update. 
+
+Make sure that in your computeValueFromQValues and computeActionFromQValues functions, you only access Q values by calling getQValue.
+
+Once you fill in your own code, remove the        util.raiseNotDefined() commands
+
+\bigskip
+
+Once you are done, you can run 
+
+\begin{verbatim} 
+python3 gridworld.py -a q -k 15
+\end{verbatim} to see the outcome of 15 episodes of Q-learning. 
+\end{verbatim}
+
+
+
+\end{document}
