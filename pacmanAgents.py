@@ -14,6 +14,7 @@
 
 from pacman import Directions
 from game import Agent
+from valueIterationAgents import ValueIterationAgent
 import random
 import game
 import util
@@ -50,3 +51,40 @@ class GreedyAgent(Agent):
 
 def scoreEvaluation(state):
     return state.getScore()
+
+# class PacmanValueAgent(ValueIterationAgent):
+#     "Exactly the same as ValueIterationAgent, but with different default parameters"
+
+#     def __init__(self, mdp, discount = 0.9, iterations = 100, **args):
+#         """
+#         These default parameters can be changed from the pacman.py command line.
+#         For example, to change the exploration rate, try:
+#             python pacman.py -p PacmanQLearningAgent -a epsilon=0.1
+
+#         # alpha    - learning rate
+#         # epsilon  - exploration rate
+#         # gamma    - discount factor
+#         # numTraining - number of training episodes, i.e. no learning after these many episodes
+#         # """
+
+#         # args['epsilon'] = epsilon
+#         # args['gamma'] = gamma
+#         # args['alpha'] = alpha
+#         # args['numTraining'] = numTraining
+#         # self.index = 0  # This is always Pacman
+
+#         args['mdp'] = mdp
+#         args['discount'] = discount
+#         args['iterations'] = iterations
+#         self.index = 0  # This is always Pacman
+#         ValueIterationAgent.__init__(self, **args)
+
+#     def getAction(self, state):
+#         """
+#         Simply calls the getAction method of valueIterationAgents and then
+#         informs parent of action for Pacman.  Do not change or remove this
+#         method.
+#         """
+#         action = ValueIterationAgent.getAction(self,state)
+#         self.doAction(state,action)
+#         return action

@@ -140,7 +140,9 @@ class GameState:
         state.pos gives the current position
         state.direction gives the travel vector
         """
+        # print(f'self.data: {self.data}')
         return self.data.agentStates[0].copy()
+        # return self.data.agentStates.copy
 
     def getPacmanPosition( self ):
         return self.data.agentStates[0].getPosition()

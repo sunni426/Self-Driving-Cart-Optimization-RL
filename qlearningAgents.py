@@ -128,6 +128,8 @@ class QLearningAgent(ReinforcementAgent):
         legalActions = self.getLegalActions(state)
         action = None
         "*** YOUR CODE HERE ***"
+
+        # print(f'state.direction')
         
         if len(legalActions)>0:
           if util.flipCoin(self.epsilon):
@@ -188,8 +190,8 @@ class PacmanQAgent(QLearningAgent):
         method.
         """
 
-        print(f'state: \n{state}')
-        print(f'state[0]: {state[0]}')
+        # print(f'state: \n{state}')
+        # print(f'state[0]: {state[0]}')
 
         action = QLearningAgent.getAction(self,state)
         self.doAction(state,action)
