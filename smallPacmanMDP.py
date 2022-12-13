@@ -49,7 +49,7 @@ class SmallPacmanMDP(mdp.MarkovDecisionProcess):
 
                     cur_layout = ["".join(chars) for chars in cur_layout]
 
-                    if count == 50: # random initial state
+                    if count == 15: # random initial state
                         global init_layout 
                         init_layout = cur_layout
                         # print(f'cur_layout: {cur_layout}')

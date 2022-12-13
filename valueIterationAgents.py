@@ -78,28 +78,28 @@ class ValueIterationAgent(ValueEstimationAgent):
             # self.values = temp_counter
 
             if self.mdp.isTerminal(current_state):
-                self.values = 0 #a terminal state has value zero
+                self.values = 0 # a terminal state has value zero
+
             else: #only non-terminal states are considered below
 
                 possible_actions = self.mdp.getPossibleActions(current_state) 
                 temp_value=-100000000 #really low number below the value function
-                best_state = current_state
+                # best_state = current_state
                 for action in possible_actions: 
                     # print(f'action: {a}')
-                    val_a = 0 #this variable will compute the value of each action
+                    val_a = 0 # this variable will compute the value of each action
                     next_state = self.mdp.getTransitionStatesAndProbs(current_state, action)
                     #next is a set of pairs of next state + probabilities
-                    rew = self.mdp.getReward(current_state,action,next_state)
+                    reward = self.mdp.getReward(current_state,action,next_state)
 
                     # print(f'reward: {rew}')
-                    val_a += (rew+self.discount*oldvalues[next_state]) #by end of this for, val_a is the value of taking action a
+                    val_a += (reward + self.discount * oldvalues[next_state]) #by end of this for, val_a is the value of taking action a
                     # for sprime, prob in next:
                     #     rew = self.mdp.getReward(s,a,sprime)
                     #     val_a += prob*(rew+self.discount*oldvalues[sprime]) #by end of this for, val_a is the value of taking action a
-                    #     # val_a += prob*(rew+self.discount*rew)
 
                     if val_a > temp_value:
-                        temp_value = val_a #maximum computation
+                        temp_value = val_a # maximum computation
                         best_state = next_state
                         best_action = action
 
@@ -204,12 +204,12 @@ class ValueIterationAgent(ValueEstimationAgent):
 
 
 
-import smallPacmanMDP as MDP
-# mdp = smallPacmanMDP.SmallPacmanMDP()
+import smallPacmanMDP 
+MDP = smallPacmanMDP.SmallPacmanMDP()
 class PacmanValueAgent(ValueIterationAgent):
     "Exactly the same as ValueIterationAgent, but with different default parameters"
 
-    def __init__(self, mdp, discount = 0.9, iterations = 100, **args):
+    def __init__(self, mdp = MDP, discount = 0.9, iterations = 100, **args):
         """
         These default parameters can be changed from the pacman.py command line.
         For example, to change the exploration rate, try:
@@ -221,26 +221,21 @@ class PacmanValueAgent(ValueIterationAgent):
         # numTraining - number of training episodes, i.e. no learning after these many episodes
         # """
 
-        # args['epsilon'] = epsilon
-        # args['gamma'] = gamma
-        # args['alpha'] = alpha
-        # args['numTraining'] = numTraining
-        # self.index = 0  # This is always Pacman
 
-        args['mdp'] = MDP
-        args['discount'] = discount
-        args['iterations'] = iterations
+        # args['mdp'] = MDP
+        # args['discount'] = discount
+        # args['iterations'] = iterations
         self.index = 0  # This is always Pacman
         ValueIterationAgent.__init__(self, mdp=MDP, discount = 0.9, iterations = 100, **args)
 
-    def getAction(self, state):
-        """
-        Simply calls the getAction method of valueIterationAgents and then
-        informs parent of action for Pacman.  Do not change or remove this
-        method.
-        """
-        action = ValueIterationAgent.getAction(self,state)
-        self.doAction(state,action)
-        return action
+    # def getAction(self, state):
+    #     """
+    #     Simply calls the getAction method of valueIterationAgents and then
+    #     informs parent of action for Pacman.  Do not change or remove this
+    #     method.
+    #     """
+    #     action = ValueIterationAgent.getAction(state)
+    #     self.doAction(state,action)
+    #     return action
 
 
