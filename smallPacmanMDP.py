@@ -49,12 +49,12 @@ class SmallPacmanMDP(mdp.MarkovDecisionProcess):
 
                     cur_layout = ["".join(chars) for chars in cur_layout]
 
-                    if count == 15: # random initial state
+                    if count == 35: # random initial state
                         global init_layout 
                         init_layout = cur_layout
                         # print(f'cur_layout: {cur_layout}')
                     count +=1
-# ghost needs to move!!
+
                     state = GameState()
 
                     state.initialize(Layout(cur_layout), 1)
@@ -78,9 +78,7 @@ class SmallPacmanMDP(mdp.MarkovDecisionProcess):
         # print(f'l.food:\n{l.food}')
 
         initState = GameState()
-        initState.initialize(layout=l,numGhostAgents=2)
-        # state.data.agentStates[0] = 
-        # print(f'initState: {initState}')
+        initState.initialize(layout=l,numGhostAgents=1)
         return initState
 
 

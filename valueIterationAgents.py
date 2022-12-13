@@ -16,7 +16,7 @@
 import util
 import copy
 import random
-
+from pacman import GameState
 
 from learningAgents import ValueEstimationAgent
 
@@ -119,11 +119,19 @@ class ValueIterationAgent(ValueEstimationAgent):
                     prev_action = action
 
                 self.values[current_state] = temp_value #at end of loops, update self.values
+                
 
                 print(f'state: \n{current_state}')
-                print(f'action: {best_action}\n')
+                print(f'pacman action: {best_action}\n')
+                
 
-                current_state = best_state
+                # current_state = self.mdp.getTransitionStatesAndProbs(current_state, best_action)
+                current_state = current_state.generateSuccessor(0,best_action)
+                ghost_action = current_state.getLegalActions(1)
+                print(f'ghost action: {ghost_action}')
+                current_state = current_state.generateSuccessor(1,random.choice(ghost_action))
+
+                # current_state = best_state
 
 
 
@@ -145,8 +153,6 @@ class ValueIterationAgent(ValueEstimationAgent):
         "*** YOUR CODE HERE ***"
         next = self.mdp.getTransitionStatesAndProbs(state, action)
         # print(next)
-
-
 
         reward = self.mdp.getReward(state,action,next)
         # print(f'action: {action}')

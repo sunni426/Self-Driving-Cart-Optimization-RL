@@ -86,6 +86,8 @@ class GameState:
 #        GameState.explored.add(self)
         if self.isWin() or self.isLose(): return []
 
+        print(f'agent index: {agentIndex}')
+        
         if agentIndex == 0:  # Pacman is moving
             return PacmanRules.getLegalActions( self )
         else:
@@ -140,7 +142,9 @@ class GameState:
         state.pos gives the current position
         state.direction gives the travel vector
         """
-        # print(f'self.data: {self.data}')
+        # print(f'{self.data.agentStates[0]}')
+        # print(f'{self.data.agentStates[1]}')
+        # print(f'self.data: \n{self.data}')
         return self.data.agentStates[0].copy()
         # return self.data.agentStates.copy
 
@@ -333,6 +337,7 @@ class PacmanRules:
         """
         Returns a list of possible actions.
         """
+        # print('hi')
         return Actions.getPossibleActions( state.getPacmanState().configuration, state.data.layout.walls )
     getLegalActions = staticmethod( getLegalActions )
 
@@ -341,6 +346,7 @@ class PacmanRules:
         Edits the state to reflect the results of the action.
         """
         legal = PacmanRules.getLegalActions( state )
+        # print(f'legal actions: {legal}')
         if action not in legal:
             raise Exception("Illegal action " + str(action))
 
@@ -393,6 +399,7 @@ class GhostRules:
         conf = state.getGhostState( ghostIndex ).configuration
         possibleActions = Actions.getPossibleActions( conf, state.data.layout.walls )
         reverse = Actions.reverseDirection( conf.direction )
+
         if Directions.STOP in possibleActions:
             possibleActions.remove( Directions.STOP )
         if reverse in possibleActions and len( possibleActions ) > 1:
