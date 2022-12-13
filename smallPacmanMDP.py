@@ -145,7 +145,7 @@ class SmallPacmanMDP(mdp.MarkovDecisionProcess):
             return LOSE_REWARD
         # elif state.hasFood(pacmanPosition[0], pacmanPosition[1]):
         elif currentFood[position[0]][position[1]] == True:
-            print(f'value increase food {FOOD_REWARD}')
+            print(f'eats food! {FOOD_REWARD}')
             return FOOD_REWARD
         else: # empty space
             return EMPTY_LOCATION_REWARD
@@ -159,5 +159,5 @@ class SmallPacmanMDP(mdp.MarkovDecisionProcess):
         are equivalent.
         """
 
-        return state.isWin() or state.isLose()
-        # return state._win or state._lose
+        # return state.isWin() or state.isLose()
+        return state.data._win or state.data._lose

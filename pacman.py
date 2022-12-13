@@ -451,6 +451,8 @@ class GhostRules:
             state.data._eaten[agentIndex] = True
         else:
             if not state.data._win:
+                # print('lose ------------')
+                print(f'state lost ------------')
                 state.data.scoreChange -= 500
                 state.data._lose = True
     collide = staticmethod( collide )

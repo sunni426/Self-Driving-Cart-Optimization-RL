@@ -57,7 +57,11 @@ class ValueIterationAgent(ValueEstimationAgent):
         current_state = start_state
         temp_counter = util.Counter()
 
+        ghost_iter = 0
+
         for i in range(self.iterations):
+
+            ghost_iter +=1
 
             # print(f'current_state: {current_state}')
 
@@ -78,12 +82,13 @@ class ValueIterationAgent(ValueEstimationAgent):
 
             if self.mdp.isTerminal(current_state):
                 self.values = 0 # a terminal state has value zero
+                break
 
             else: #only non-terminal states are considered below
 
                 possible_actions = self.mdp.getPossibleActions(current_state) 
                 temp_value=-100000000 #really low number below the value function
-                # print(f'possible actions: {possible_actions}')
+                print(f'possible actions: {possible_actions}')
 
                 same_val_actions = []
 
@@ -93,6 +98,7 @@ class ValueIterationAgent(ValueEstimationAgent):
 
                     val_a = 0 # this variable will compute the value of each action
                     next_state = self.mdp.getTransitionStatesAndProbs(current_state, action)
+
                     # next is a set of pairs of next state + probabilities
                     reward = self.mdp.getReward(current_state,action,next_state)
 
@@ -122,18 +128,21 @@ class ValueIterationAgent(ValueEstimationAgent):
                 
 
                 print(f'state: \n{current_state}')
-                print(f'pacman action: {best_action}\n')
+                print(f'pacman action: {best_action}')
+                # print(f'isLose(): {current_state.isLose()}')
                 
-
-                # current_state = self.mdp.getTransitionStatesAndProbs(current_state, best_action)
-                current_state = current_state.generateSuccessor(0,best_action)
-                ghost_action = current_state.getLegalActions(1)
-                print(f'ghost action: {ghost_action}')
-                current_state = current_state.generateSuccessor(1,random.choice(ghost_action))
-
+                if self.mdp.isTerminal(best_state):
+                    break
+                else:
+                    current_state = best_state.generateSuccessor(0,best_action)
+                    if ghost_iter%3==0:
+                        ghost_action_possible = current_state.getLegalActions(1)
+                        if ghost_action_possible:
+                            ghost_action = random.choice(ghost_action_possible)
+                            print(f'ghost action: {ghost_action}')
+                            current_state = current_state.generateSuccessor(1,ghost_action)
+                            
                 # current_state = best_state
-
-
 
                 # print(f'value update: value = {temp_value}')
                     
