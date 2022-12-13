@@ -15,8 +15,7 @@
 # import smallPacmanMDP as MDP
 import util
 import copy
-import importlib
-# importlib.reload(MDP)
+import random
 
 
 from learningAgents import ValueEstimationAgent
@@ -84,30 +83,45 @@ class ValueIterationAgent(ValueEstimationAgent):
 
                 possible_actions = self.mdp.getPossibleActions(current_state) 
                 temp_value=-100000000 #really low number below the value function
-                # best_state = current_state
+                # print(f'possible actions: {possible_actions}')
+
+                same_val_actions = []
+
+                prev_action = possible_actions[0]
+
                 for action in possible_actions: 
-                    # print(f'action: {a}')
+
                     val_a = 0 # this variable will compute the value of each action
                     next_state = self.mdp.getTransitionStatesAndProbs(current_state, action)
-                    #next is a set of pairs of next state + probabilities
+                    # next is a set of pairs of next state + probabilities
                     reward = self.mdp.getReward(current_state,action,next_state)
 
                     # print(f'reward: {rew}')
-                    val_a += (reward + self.discount * oldvalues[next_state]) #by end of this for, val_a is the value of taking action a
+                    val_a += (reward + self.discount * oldvalues[next_state]) # by end of this for, val_a is the value of taking action a
+                    
+                    if temp_value == val_a:
+                        if prev_action not in same_val_actions:
+                            same_val_actions.append(prev_action)
+                        if action not in same_val_actions:
+                            same_val_actions.append(action)
+                        best_action = random.choice(same_val_actions)
+
+                    elif val_a > temp_value:
+                        temp_value = val_a # maximum computation
+                        best_state = next_state
+                        best_action = action
+                    
                     # for sprime, prob in next:
                     #     rew = self.mdp.getReward(s,a,sprime)
                     #     val_a += prob*(rew+self.discount*oldvalues[sprime]) #by end of this for, val_a is the value of taking action a
 
-                    if val_a > temp_value:
-                        temp_value = val_a # maximum computation
-                        best_state = next_state
-                        best_action = action
+
+                    prev_action = action
 
                 self.values[current_state] = temp_value #at end of loops, update self.values
 
                 print(f'state: \n{current_state}')
                 print(f'action: {best_action}\n')
-
 
                 current_state = best_state
 
